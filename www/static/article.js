@@ -40,7 +40,7 @@ function onError(error) {
 //var apipath="http://a.businesssolutionapps.com/gpff/syncmobile/";
 
 //--- local
-var apipath="http://127.0.0.1:8000/article_viewer/syncmobile/";
+var apipath="http://c003.businesssolutionapps.com/skfcs/syncmobile/";
 
  url ="";
 
