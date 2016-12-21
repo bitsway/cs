@@ -11,7 +11,9 @@ var imagePath2B="";
 var latitude="";
 var longitude="";
 var upListFlag=0;
-
+// #######################
+var lat;
+var long;
 
 
 function getLocationInfoAch() {	
@@ -23,6 +25,8 @@ function getLocationInfoAch() {
 function onSuccess(position) {
 	$("#ach_lat").val(position.coords.latitude);
 	$("#ach_long").val(position.coords.longitude);
+	//$("#ach_lat").val(position.coords.latitude);
+	//$("#ach_long").val(position.coords.longitude);
 	$(".errorChk").html("Location Confirmed");
 }
 // onError Callback receives a PositionError object
@@ -36,7 +40,7 @@ function onError(error) {
 //var apipath="http://a.businesssolutionapps.com/gpff/syncmobile/";
 
 //--- local
-var apipath="http://c003.businesssolutionapps.com/skfcs/syncmobile/";
+var apipath="http://127.0.0.1:8000/article_viewer/syncmobile/";
 
  url ="";
 
@@ -163,7 +167,52 @@ function backClick(){
 	$(".errorChk").text("");
 	}
 
+// my requestForm work start here  ########################################################
 
+function myRequestForm(){
+			var email=$("#email").val();
+			var emailCheck =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+			
+			var mobile= $("#mobile").val();
+			
+			if(!mobile==""){
+				mobile= 88+mobile;
+				}
+			var remark=$("#remark").val();
+			var name=$("#name").val();
+			
+			var lat = $("#ach_lat").val();
+			var long = $("#ach_long").val();
+			
+			if(email == "" & mobile == ""){
+				$(".errorReq").text("Email or Mobile required !!");
+			}
+			
+			else if(!email.match(emailCheck)){
+				$(".errorReq").text("Invalid email format !!");
+				}
+				
+			
+			else{
+				//alert(apipath+'insertRequestData?cid=ARTICLE_VIEWER&email='+email+'&mobile='+mobile+'&remark='+remark+'&name='+name+'&lat='+lat+'&long='+long);
+				$.ajax({
+						url: apipath+'insertRequestData?cid=ARTICLE_VIEWER&email='+email+'&mobile='+mobile+'&remark='+remark+'&name='+name+'&lat='+lat+'&long='+long,
+						success: function(resStr) {
+								if(resStr == 'Success'){
+									$(".errorReq").text("Request Submitted");
+									url="#leftpanel";					
+									$.mobile.navigate(url);
+								}else{
+									$(".errorReq").text("Failed to save");
+									url="#leftpanel";					
+									$.mobile.navigate(url);
+									}
+								
+							}
+					});
+				}
+			
+		}
 
 function searchData(){
 	var searchValue=$("#searchValue").val();
@@ -187,8 +236,8 @@ function searchData(){
 						  var article_id=keywordLi[0];
 						  var article_name=keywordLi[1]
 						  var article_introduction=keywordLi[2];
-						  
-						  keywordS+='<a data-role="button" style="margin-bottom:1px;" onClick="article_page(\''+article_id+'\')" >'+article_name+'</a>' 
+						  //  data-role="button"  border:1px solid #00e6e6;
+						  keywordS+='<a data-role="button" style="margin-bottom:10px; " onClick="article_page(\''+article_id+'\')" >'+article_name+'</a>' 
 							
 						  keywordS+='<p style="padding-bottom:5px; border:1px solid #00e6e6;">'+article_introduction+'</p>'
 						  
@@ -285,10 +334,11 @@ function article_name(subCategory){
 					  var article_id=articleNameLi[0];
 					  var article_name=articleNameLi[1];
 					  var article_introduction=articleNameLi[2];
-					  
-					  articleNameS+='<a data-role="button" style="margin-bottom:1px;" onClick="article_page(\''+article_id+'\')" >'+article_name+'</a>' 
+					  // The change area is here ####################################################
+					  // a  data-role="button" class="ui-icon-carat-r ui-btn ui-btn-icon-right"
+					  articleNameS+='<a style="margin-bottom:1px; color:#ffffff;" onClick="article_page(\''+article_id+'\')" >'+article_name+'</a>' 
 						
-					  articleNameS+='<p style="padding-bottom:5px; border:1px solid #00e6e6;">'+article_introduction+'</p>'
+					  articleNameS+='<p style="padding:15px; border:2px solid #ffffff; border-radius:7px" onClick="article_page(\''+article_id+'\')" >'+article_introduction+'</p>'
 					  
 					  
 				  }

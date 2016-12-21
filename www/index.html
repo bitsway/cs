@@ -16,8 +16,23 @@
     	function syncPage(){
 			$(".errorChk").text("");
 			$.mobile.navigate("#pagesync")
-			};	
+			}	
+			
+		/*
+		function myRequestForm(){
+			var email = document.forms["myForm"]["email"].value;
+			var mobile = document.forms["myForm"]["mobile"].value;
+			if(email == "" & mobile== ""){
+				document.getElementById("alert_error").innerHTML="Email or Mobile is required !!";
+				document.getElementById("alert_error").style.color="red";
+				return false;
 				
+			}
+			
+		}	
+		*/
+		
+		
     </script>
 	       
     <style>	
@@ -30,6 +45,33 @@
 		}
 		
 		.tbl_bro_color{border:1px solid #B8DCDC;}
+		
+		.syncbg{
+			background-image : url("b.jpg");
+		}
+		.bgSet{
+			background-image : url("img3.jpg");
+		}
+		.info_form{
+			background-color:#ffffff;
+			border-radius:5px;
+			padding:36px 0;
+			
+		}
+		.medical_heading{
+			color :#ffffff;
+			font-size:23px;
+			font-weight:bold;
+			background-color:#047AC0;
+			border-radius:5px;
+			padding:1px;
+			margin:5px 0;
+			
+		}
+		.customBorder{
+			border:1px solid #125c68 !important;
+		}
+		
     </style>	
 </head>
 
@@ -37,12 +79,12 @@
 
 
 <!-- MAIN MENU ----------------------------------------------------------------------------- -->
-<div data-theme="c" data-role="page" id="homePage" style="overflow:scroll;">
+<div data-theme="c" data-role="page" id="homePage" style="overflow:scroll;" class="bgSet">
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" href="#leftpanel" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets" ><img src="menu.png" /></a>
         
-        
-      <h3>MCS</h3>
+        <a data-role="button" onClick="exit();" ><img src="exit.png" /></a>
+      <h3>ARTICLE</h3>
     </div>
     
     <div data-role="content" align="center" style="height:90%" >
@@ -59,26 +101,72 @@
 
        <div id="articleCatDiv"></div>
        
-       <img width="100%" src="http://c003.businesssolutionapps.com/skfcs/static/images/pic/bgimg.jpg" />
+      <!-- <img width="100%" src="http://127.0.0.1:8000/article_viewer/static/images/pic/bgimg.jpg" /> -->
        
     </div>
     
     <!--<div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" ></div>--><!------m-Reporting 20161110 -->
     
-    <div data-role="panel" id="leftpanel" data-position="left" data-display="overlay" data-theme="c">
-        <div align="center"></div>
+	
+	
+	<!---- Request information area is here -->
+    <div data-role="panel" id="leftpanel" class="syncbg" data-position="left" data-display="overlay" data-theme="c">
+        <div align="center" class="medical_heading">
+			<p>Medical Case Studies </p>
+		</div>
+		<div class="info_form">
+			
+				<table>
+					<tr>
+						<th colspan="2">Request for Information</th>
+					</tr>
+                    <tr>
+						<td>Name</td>
+						<td>
+                        	<input type="text" id="name" placeholder="" class="customBorder"/>
+                            <input name="ach_lat" id="ach_lat" value=""  type="hidden"/>
+        					<input name="ach_long" id="ach_long" value=""  type="hidden"/>
+                        </td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td><input type="text" id="email" placeholder="" class="customBorder"/></td>
+					</tr>
+					<tr>
+						<td>Mobile</td>
+						<td><input type="number" id="mobile" placeholder="" class="customBorder"/></td>
+					</tr>
+					<tr>
+						<td>Remark</td>
+						<td><textarea id="remark" placeholder="" class="customBorder"></textarea></td>
+					</tr>
+					
+					<tr>
+						<td colspan="2"><span class="errorReq" style="color:#000000; font-weight:bold"></span></td>
+					</tr>
+					<tr>
+						<td colspan="2"><input type="submit" value="Submit" onClick="myRequestForm()"></td>
+					</tr>
+				</table>
+			
+		</div>
         <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+		<!--
         <ul data-role="listview" >
           <li><a data-role="button" class="ui-btn" onclick="syncPage();"><center><img src="sync.png" /></center></a></li>		  
-        </ul>
+        </ul> -->
         <br/>
-        <center><img src="sideimage.png" />
         <br/>
         <br/>
         <div align="center"></div>
     </div>
 </div>
-
+<!-- Main menu ends here -->
 
 
 <!-- ------------------- sync page---------------------------------------------------------------------------------------- -->
@@ -116,15 +204,15 @@
 -->
 
 <!----------------------ARTICLE page0------------------------------------------------- -->
-<div data-role="page" data-theme="c" id="first_page" style="overflow:scroll;">
+<div data-role="page" data-theme="c" id="first_page" style="overflow:scroll;" class="bgSet">
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
         <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>MCS</h3>
+        <h3>ARTICLE</h3>
     </div>
      
     <div data-role="content" >  
-        <div id="showCategory" style="font-weight:bold;"></div>
+        <div id="showCategory" style="font-weight:bold; color:#ffffff"></div>
         
         <div id="articleSubCatDiv"></div>
                              
@@ -137,17 +225,17 @@
 
 
 
-<div data-role="page" data-theme="c" id="second_page" style="overflow:scroll;">
+<div data-role="page" data-theme="c" id="second_page" style="overflow:scroll;" class="bgSet">
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
         <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>MCS</h3>
+        <h3>ARTICLE</h3>
     </div>
      
     <div data-role="content" >  
-        <div id="showSubCategory" style="font-weight:bold;"></div>
+        <div id="showSubCategory" style="font-weight:bold; color:#ffffff"></div>
         <br />
-        <div id="articleNameDiv"></div>
+        <div id="articleNameDiv" style="color:#ffffff"></div>
                              
         <div class="errorChk"></div>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
@@ -161,7 +249,7 @@
     <div data-theme="c" data-role="header" data-position="fixed" >
         <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
         <a data-role="button" onclick="backClick();" data-rel="back" class="ui-btn-right" data-transition="slide"><img src="back.png" /></a>
-        <h3>Medical Case Studies</h3>
+        <h3>ARTICLE</h3>
     </div>
     <div id="showName" style="font-weight:bold;"></div>
     
