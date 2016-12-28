@@ -36,11 +36,8 @@ function onError(error) {
    $(".errorChk").html("Failed to Confirmed Location.");
 }
 
-//---- online 
-//var apipath="http://a.businesssolutionapps.com/gpff/syncmobile/";
-
 //--- local
-var apipath="http://c003.businesssolutionapps.com/skfcs/syncmobile/";
+var apipath="http://104.199.176.230/skfcs/syncmobile/";
 
  url ="";
 
@@ -57,13 +54,18 @@ $(document).ready(function(){
 				$('#ffUpDiv').empty();
 				$('#ffUpDiv').append(localStorage.upazilaList).trigger('create');
 			}*/
-
-
+	
+	$("#name").val(localStorage.name);
+	$("#email").val(localStorage.email);
+	$("#mobile").val(localStorage.mobile);		
+	$("#name1").val(localStorage.name);
+	$("#email1").val(localStorage.email);
+	$("#mobile1").val(localStorage.mobile);
+	$("#remark").val("");
 			
 var articlecategoryStr="";
-	 	//alert(apipath+'article_category?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&mobile_no='+localStorage.mobile_no);
 		$.ajax({
-			  url:apipath+'article_category?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&mobile_no='+localStorage.mobile_no,
+			  url:apipath+'article_category?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code,
 			  success: function(resStr) {	
 				  
 				  articlecategoryStr=resStr.split(",");
@@ -75,7 +77,8 @@ var articlecategoryStr="";
 					  
 					  					  
 					  for (j=0;j<articleLi.length;j++){
-						  articleListS+='<li style="margin-bottom:1px;" onClick="articleSubcategory(\''+articleLi+'\')" ><a>'+articleLi+'</a></li>' 
+						  articleListS+='<li style="margin-bottom:1px;" onClick="article_name(\''+articleLi+'\')" ><a>'+articleLi+'</a></li>'
+						  // article_name articleListS+='<li style="margin-bottom:1px;" onClick="articleSubcategory(\''+articleLi+'\')" ><a>'+articleLi+'</a></li>' 
 						  }
 					  
 				  	  				  				  
@@ -174,10 +177,12 @@ function myRequestForm(){
 			var emailCheck =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
 			
 			var mobile= $("#mobile").val();
-			
-			if(!mobile==""){
-				mobile= 88+mobile;
-				}
+			//alert(mobile.length);
+			if(!mobile=="" && mobile.length==13){
+				mobile= mobile;
+				}else if(!mobile=="" && mobile.length==11){
+					mobile= 88+mobile;
+					}
 			var remark=$("#remark").val();
 			var name=$("#name").val();
 			
@@ -195,10 +200,15 @@ function myRequestForm(){
 			
 			else{
 				//alert(apipath+'insertRequestData?cid=ARTICLE_VIEWER&email='+email+'&mobile='+mobile+'&remark='+remark+'&name='+name+'&lat='+lat+'&long='+long);
+				
 				$.ajax({
 						url: apipath+'insertRequestData?cid=ARTICLE_VIEWER&email='+email+'&mobile='+mobile+'&remark='+remark+'&name='+name+'&lat='+lat+'&long='+long,
 						success: function(resStr) {
+									
 								if(resStr == 'Success'){
+									localStorage.name = name;
+									localStorage.email = email;
+									localStorage.mobile = mobile;
 									$(".errorReq").text("Request Submitted");
 									url="#leftpanel";					
 									$.mobile.navigate(url);
@@ -212,7 +222,60 @@ function myRequestForm(){
 					});
 				}
 			
-		}
+		} // My request form ends here
+// my requestForm1 work start here  ########################################################
+
+function myRequestForm1(){
+			var email1=$("#email1").val();
+			var emailCheck1 =  /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+			
+			var mobile1= $("#mobile1").val();
+			//alert(mobile1.length);
+			if(!mobile1=="" && mobile1.length==13){
+				mobile1= mobile1;
+				}else if(!mobile1=="" && mobile1.length==11){
+					mobile1= 88+mobile1;
+					}
+			var remark1=$("#remark1").val();
+			var name1=$("#name1").val();
+			
+			var lat = $("#ach_lat").val();
+			var long = $("#ach_long").val();
+			
+			if(email1 == "" & mobile1 == ""){
+				$(".errorReq").text("Email or Mobile required !!");
+			}
+			
+			else if(!email1.match(emailCheck1)){
+				$(".errorReq").text("Invalid email format !!");
+				}
+				
+			
+			else{
+				//alert(apipath+'insertRequestData?cid=ARTICLE_VIEWER&email='+email+'&mobile='+mobile+'&remark='+remark+'&name='+name+'&lat='+lat+'&long='+long);
+				
+				$.ajax({
+						url: apipath+'insertRequestData?cid=ARTICLE_VIEWER&email='+email1+'&mobile='+mobile1+'&remark='+remark1+'&name='+name1+'&lat='+lat+'&long='+long,
+						success: function(resStr) {
+									
+								if(resStr == 'Success'){
+									localStorage.name = name1;
+									localStorage.email = email1;
+									localStorage.mobile = mobile1;
+									$(".errorReq").text("Request Submitted");
+									url="#leftpanel";					
+									$.mobile.navigate(url);
+								}else{
+									$(".errorReq").text("Failed to save");
+									url="#leftpanel";					
+									$.mobile.navigate(url);
+									}
+								
+							}
+					});
+				}
+			
+		} // My requestform1 ends here
 
 function searchData(){
 	var searchValue=$("#searchValue").val();
@@ -237,9 +300,12 @@ function searchData(){
 						  var article_name=keywordLi[1]
 						  var article_introduction=keywordLi[2];
 						  //  data-role="button"  border:1px solid #00e6e6;
-						  keywordS+='<a data-role="button" style="margin-bottom:10px; " onClick="article_page(\''+article_id+'\')" >'+article_name+'</a>' 
-							
-						  keywordS+='<p style="padding-bottom:5px; border:1px solid #00e6e6;">'+article_introduction+'</p>'
+						  keywordS+='<a data-role="button" style="margin-bottom:10px; " >'+article_name+'</a>' 
+						  keywordS+='<div style="padding:1px 5px 10px 5px; border:2px solid #ffffff; border-radius: 5px">'
+						  keywordS+='<p >'+article_introduction+'</p>'
+						  keywordS+='<a href="#leftpanel1" style="text-decoration:none; color:#ffffff; padding:5px 5px; border-radius:3px; background-color:#4C9ED9; font-weight:normal" onClick="reqSet(\''+article_name+'\', \''+article_introduction+'\')">'+"Request Info."+'</a>'
+						  keywordS+='&nbsp;&nbsp;<a onClick="article_page(\''+article_id+'\')" style="color:#ffffff; font-weight:normal;">Details..<img src="arrow_right.png" style="width:17px; height:11px"/></a>'
+						  keywordS+='</div>'
 						  
 					  }
 						  
@@ -265,10 +331,6 @@ function searchData(){
 	}
 
 }
-
-
-
-
 
 function articleSubcategory(category){
 	 
@@ -312,36 +374,39 @@ function articleSubcategory(category){
 
 
 
-function article_name(subCategory){
+function article_name(category){
 	 
-	localStorage.subCategory=subCategory;
-	$("#showSubCategory").html(localStorage.subCategory);	
-
- 
+	localStorage.category=category;
+	
 	var articleNameStr="";
-	 	//alert(apipath+'article_name?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&category='+localStorage.category+'&subCategory='+localStorage.subCategory);
 		$.ajax({
-			  url:apipath+'article_name?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&category='+localStorage.category+'&subCategory='+localStorage.subCategory,
+			  url:apipath+'article_name?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&category='+localStorage.category,
 			  success: function(resStr) {	
-				  
-				  articleNameStr=resStr.split("||");
-				  
 				  var articleNameS='';
+				  articleNameStrH=resStr.split("<fg>");
+				  var article_image=articleNameStrH[1];
+				  articleNameS='<a class="resize_a"><img src="'+article_image+'" style="padding-top:10px; width:100%"/></a>'
+				  
+				  articleNameStr=articleNameStrH[0].split("||");
+				  
 				  
 				  for (i=0;i<articleNameStr.length;i++){
 					  articleNameLi=articleNameStr[i].split("-")
 					  
 					  var article_id=articleNameLi[0];
 					  var article_name=articleNameLi[1];
-					  var article_introduction=articleNameLi[2];
-					  // The change area is here ####################################################
-					  // a  data-role="button" class="ui-icon-carat-r ui-btn ui-btn-icon-right"
-					  articleNameS+='<a style="margin-bottom:1px; color:#ffffff;" onClick="article_page(\''+article_id+'\')" >'+article_name+'</a>' 
-						
-					  articleNameS+='<p style="padding:15px; border:2px solid #ffffff; border-radius:7px" onClick="article_page(\''+article_id+'\')" >'+article_introduction+'</p>'
+					  var article_introduction=articleNameLi[2];					  
 					  
-					  
-				  }
+					  //article_introduction
+					  articleNameS+='<div style="padding:5px 10px 15px 10px; border:2px solid #ffffff; border-radius:7px; margin-top:15px" >'
+					  articleNameS+='<div style="margin-bottom:10px">'
+					  articleNameS+='<h3 style="margin:0; font-style:italic" id="rquestName">'+article_name+'</h3>'
+					  articleNameS+='<p style="margin:5px 0; " id="requestIntro" >'+article_introduction+'</p>'
+					  articleNameS+='</div>'
+					  articleNameS+='<a href="#leftpanel1" style="text-decoration:none; color:#ffffff; padding:5px 5px; border-radius:3px; background-color:#4C9ED9; font-weight:normal" onClick="reqSet(\''+article_name+'\', \''+article_introduction+'\')">'+"Request Info."+'</a>'
+					  articleNameS+='&nbsp;&nbsp;<a onClick="article_page(\''+article_id+'\')" style="color:#ffffff; font-weight:normal;">Details..<img src="arrow_right.png" style="width:17px; height:11px"/></a>'
+					  articleNameS+='</div>'
+					}
 				  	  
 				  articleNameS+='';
 				  
@@ -356,30 +421,27 @@ function article_name(subCategory){
 	
 }
 
-
+function reqSet(article_name, article_introduction){
+				$("#remark1").val(article_name);	
+	}
+	
+	
+	
 function article_page(article){
-	
 	localStorage.article_id=article; 
-	
-	//$("#showName").html(localStorage.article_id);	
 	localStorage.pageNo=1;
-	
-	
 	var articlepageStr="";
-	 	//alert(apipath+'article_page?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&pageNo='+localStorage.pageNo+'&article_id='+localStorage.article_id);
 		$.ajax({
 			  url:apipath+'article_page?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&pageNo='+localStorage.pageNo+'&article_id='+localStorage.article_id,
 			  success: function(resStr) {	
-				  
-				  resultStr=resStr.split("<fd>");
-							  	
+				  resultStr=resStr.split("<fd>"); 
 					 if (resultStr[0]=="Success"){
-						  var pageStr=resultStr[1].split("fdfd");	
-						  					  
+						  var pageStr=resultStr[1].split("fdfd");					  
 						   var page_Sl=pageStr[0];
 						   var page_content=pageStr[1];
 						   var page_no=pageStr[2];
 						   var page_count=pageStr[3];
+						   //alert(page_count);
 						   
 						  var articlePageS='';
 												  
