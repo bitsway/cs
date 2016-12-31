@@ -1,4 +1,4 @@
-
+// http://104.199.176.230/skfcs/default/home
 
 
 var achPhoto="";
@@ -35,6 +35,9 @@ function onError(error) {
    $("#ach_long").val(0);
    $(".errorChk").html("Failed to Confirmed Location.");
 }
+
+//---- online 
+//var apipath="http://a.businesssolutionapps.com/gpff/syncmobile/";
 
 //--- local
 var apipath="http://104.199.176.230/skfcs/syncmobile/";
@@ -381,14 +384,13 @@ function article_name(category){
 	var articleNameStr="";
 		$.ajax({
 			  url:apipath+'article_name?cid=ARTICLE_VIEWER&sync_code='+localStorage.sync_code+'&category='+localStorage.category,
-			  success: function(resStr) {	
+			  success: function(resStr) {
 				  var articleNameS='';
 				  articleNameStrH=resStr.split("<fg>");
 				  var article_image=articleNameStrH[1];
 				  articleNameS='<a class="resize_a"><img src="'+article_image+'" style="padding-top:10px; width:100%"/></a>'
 				  
 				  articleNameStr=articleNameStrH[0].split("||");
-				  
 				  
 				  for (i=0;i<articleNameStr.length;i++){
 					  articleNameLi=articleNameStr[i].split("-")
@@ -407,11 +409,19 @@ function article_name(category){
 					  articleNameS+='&nbsp;&nbsp;<a onClick="article_page(\''+article_id+'\')" style="color:#ffffff; font-weight:normal;">Details..<img src="arrow_right.png" style="width:17px; height:11px"/></a>'
 					  articleNameS+='</div>'
 					}
-				  	  
+				  //articleNameS+='<div data-role="footer"><img src="'+article_image+'" style="height:50px; width:100%"></div>'; CardiovascularFooter.jpg
 				  articleNameS+='';
+				  //artFooter='<a><img src="'+article_image+'" style="width:100%; height:50px"/></a>'
+				  
+				  var article_imageFooter=articleNameStrH[2];
+				  //alert(article_imageFooter);
+				  artFooter='<a><img src="'+article_imageFooter+'" style="width:100%; height:50px"/></a>'
 				  
 				$('#articleNameDiv').empty();
 				$('#articleNameDiv').append(articleNameS).trigger('create');
+				
+				$('#footerImage').empty();
+				$('#footerImage').append(artFooter).trigger('create');
 				 
 				  url="#second_page";					
 				  $.mobile.navigate(url);
