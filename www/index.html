@@ -58,7 +58,21 @@
 		.customBorder{
 			border:1px solid #125c68 !important;
 		}
-		
+		.footer_img{
+			background-color:#ffffff !important;
+			border-color:#ffffff !important;
+			
+			}
+		.footer_image_display{
+			width:100% !important; 
+			height:50px !important;
+			}
+		.footer_image_displaya{
+			padding:0px !important;
+			border-radius:0px !important; 
+			background-color:#ffffff !important;
+			}
+		<!-- style="width:100%; height:50px; background-color:#ffffff !important;" -->
     </style>	
 </head>
 
@@ -85,12 +99,22 @@
         <td width="100"><input type="button" name="btnSearch" id="btnSearch" class="ui-btn" value="Search" onclick="searchData()" /></td>
       </tr>
     </table>
+	  <!-- <div id="noticeDiv">
+       	<p id="noticeP"></p>
+       </div> -->
 
        <div id="articleCatDiv"></div>
        
       <!-- <img width="100%" src="http://127.0.0.1:8000/article_viewer/static/images/pic/bgimg.jpg" /> -->
        
     </div>
+    <div data-role="footer" class="footer_img" data-position="fixed">
+    <!--
+		<img src="ForwebPage.jpg" alt="Footer Banner" style="width:100%;"/>
+        -->
+		<img src="https://dl.dropboxusercontent.com/u/557962/skfcs/image/ForwebPage.jpg" alt="Footer Banner" style="width:100%;"/>
+        
+	</div><!-- /footer -->
     
     <!--<div data-theme="c" data-role="footer" data-position="fixed" style="font-size:12px;background-color:#CCC;" align="center" ></div>--><!------m-Reporting 20161110 -->
     
@@ -137,58 +161,9 @@
 				</table>
 			
 		</div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-		<!--
-        <ul data-role="listview" >
-          <li><a data-role="button" class="ui-btn" onclick="syncPage();"><center><img src="sync.png" /></center></a></li>		  
-        </ul> -->
-        <br/>
-        <br/>
-        <br/>
         <div align="center"></div>
     </div>
 </div>
-<!-- Main menu ends here -->
-
-
-<!-- ------------------- sync page---------------------------------------------------------------------------------------- -->
-<!--<div data-theme="c" data-role="page" id="pagesync" >
-    <div data-theme="c" data-role="header" data-position="fixed" >
-        <a data-role="button" onClick="menuClick();" data-icon="bullets" data-iconpos="left" class="ui-btn ui-shadow ui-corner-all ui-icon-bullets " ><img src="menu.png" /></a>
-        <h3>Registration</h3>
-    </div>
-    <div data-role="content">
-        <div class="errorMsg"></div>
-        <ul data-role="listview" data-inset="true" data-theme="c">
-        	<li class="ui-field-contain">
-                <label for="name"> Name</label>
-                <input name="name" id="name" placeholder="" value="" type="text">
-            </li>
-            <li class="ui-field-contain">
-                <label for="mobile"> Mobile No</label>
-                <input name="mobile" id="mobile" placeholder="" value="" type="number">
-            </li>
-            <li class="ui-field-contain">
-                <label for="password">Password </label>
-                <input type="password" name="password" id="password" placeholder="" value="" >
-            </li>
-        </ul>
-        <a data-role="button" href="#" id="syncBasic" onclick="syncBasic()"  data-theme="c" data-transition="slide" >Registration    </a>
-		<div id="#syncData"></div>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-    </div>
-</div>
--->
 
 <!----------------------ARTICLE page0------------------------------------------------- -->
 <div data-role="page" data-theme="c" id="first_page" style="overflow:scroll;" class="bgSet">
